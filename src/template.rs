@@ -1,3 +1,5 @@
+pub fn get_template() -> String {
+    return r#"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,4 +50,7 @@
 
 </body>
 </html>
+
+"#.to_string();
+}
 

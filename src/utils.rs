@@ -10,13 +10,15 @@ pub struct Marker {
 pub fn read_stdin(input: String) -> Result<Vec<Marker>, Error> {
     let mut markers: Vec<Marker> = Vec::new();
 
-    let binding = input.replace("\n", "");
-    let splitted_input: Vec<&str> = binding.split(',').collect();
-    let mark = Marker {
-        lat: splitted_input[0].parse::<i32>().unwrap(),
-        lng: splitted_input[1].parse::<i32>().unwrap(),
-    };
-    markers.push(mark);
+    let lines = input.lines();
+    for line in lines {
+        let splitted_input: Vec<&str> = line.split(',').collect();
+        let mark = Marker {
+            lat: splitted_input[0].parse::<i32>().unwrap(),
+            lng: splitted_input[1].parse::<i32>().unwrap(),
+        };
+        markers.push(mark);
+    }
 
     Ok(markers)
 }

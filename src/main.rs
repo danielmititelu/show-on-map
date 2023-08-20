@@ -7,6 +7,7 @@ use std::{
 use std::io::{self, Read};
 
 mod utils;
+mod template;
 
 #[derive(Parser)]
 struct Args {
@@ -37,15 +38,14 @@ fn main() -> std::io::Result<()> {
     let serialized = serde_json::to_string(&markers).unwrap();
     let markers_template = format!("var markers = {}", serialized);
 
-    let template_path = std::path::Path::new("./template/index.html");
-    let template = std::fs::read_to_string("./template/index.html")?;
+    let template = template::get_template();
     let page = template.replace("var markers = []", &markers_template);
 
-    let mut file = File::create(args.file_path)?;
+    let mut file = File::create(&args.file_path)?;
     file.write_all(page.as_bytes())?;
 
     if args.open_browser {
-        open_in_browser(template_path);
+        open_in_browser(&args.file_path);
     }
 
     return Ok(());
