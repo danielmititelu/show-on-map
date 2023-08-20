@@ -35,9 +35,12 @@ pub fn get_template() -> String {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 
+    var bounds = L.latLngBounds();
     var markers = [];
     markers.forEach(marker => {
-        L.marker([marker.lat, marker.lng]).addTo(map);
+        let lat_lng = [marker.lat, marker.lng];
+        bounds.extend(lat_lng);
+        L.marker(lat_lng).addTo(map);
     });
 
 	var polygon = L.polygon([
@@ -45,6 +48,8 @@ pub fn get_template() -> String {
 		[51.503, -0.06],
 		[51.51, -0.047]
 	]).addTo(map);
+
+    map.fitBounds(bounds);
 
 </script>
 

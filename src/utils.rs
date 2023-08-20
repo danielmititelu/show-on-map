@@ -3,8 +3,8 @@ use std::io::Error;
 
 #[derive(Serialize, Debug, PartialEq)]
 pub struct Marker {
-    lat: i32,
-    lng: i32,
+    lat: String,
+    lng: String,
 }
 
 pub fn read_stdin(input: String) -> Result<Vec<Marker>, Error> {
@@ -13,9 +13,10 @@ pub fn read_stdin(input: String) -> Result<Vec<Marker>, Error> {
     let lines = input.lines();
     for line in lines {
         let splitted_input: Vec<&str> = line.split(',').collect();
+        println!("{:?}", splitted_input);
         let mark = Marker {
-            lat: splitted_input[0].parse::<i32>().unwrap(),
-            lng: splitted_input[1].parse::<i32>().unwrap(),
+            lat: splitted_input[0].to_string(),
+            lng: splitted_input[1].to_string(),
         };
         markers.push(mark);
     }
@@ -29,8 +30,8 @@ fn it_works() {
     let actual = read_stdin("1,2".to_string()).unwrap();
 
     let marker = Marker {
-        lat: 1,
-        lng: 2
+        lat: "1".to_string(),
+        lng: "2".to_string()
     };
     let expected = vec![marker];
     assert_eq!(actual, expected);
